@@ -164,6 +164,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="feautures\aimbot.cpp" />
+    <ClCompile Include="feautures\gldraw.cpp" />
+    <ClCompile Include="feautures\gltext.cpp" />
+    <ClCompile Include="hook\hook.cpp" />
     <ClCompile Include="math\math.cpp" />
     <ClCompile Include="mem\mem.cpp" />
     <ClCompile Include="source\constants.cpp" />
@@ -172,6 +175,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feautures\aimbot.h" />
+    <ClInclude Include="feautures\gldraw.h" />
+    <ClInclude Include="feautures\gltext.h" />
+    <ClInclude Include="hook\hook.h" />
     <ClInclude Include="math\math.h" />
     <ClInclude Include="mem\mem.h" />
     <ClInclude Include="source\constants.h" />

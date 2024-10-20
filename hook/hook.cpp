@@ -1,6 +1,6 @@
-#include "mem.h"
+#include "hook.h"
 
-bool Mem::Detour32(BYTE* src, BYTE* dst, const uintptr_t len)
+bool Hook::Detour32(BYTE* src, BYTE* dst, const uintptr_t len)
 {
 	if (len < 5)
 		return false;
@@ -23,7 +23,7 @@ bool Mem::Detour32(BYTE* src, BYTE* dst, const uintptr_t len)
 	VirtualProtect(src, len, curProtection, &curProtection);
 	return true;
 }
-BYTE* Mem::TrampHook32(BYTE* src, BYTE* dst, const uintptr_t len)
+BYTE* Hook::TrampHook32(BYTE* src, BYTE* dst, const uintptr_t len)
 {
 	if (len < 5)
 		return 0;

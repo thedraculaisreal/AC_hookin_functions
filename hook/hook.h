@@ -2,8 +2,9 @@
 #include <Windows.h>
 #include <vector>
 
-namespace Mem
+namespace Hook
 {
 	bool Detour32(BYTE* src, BYTE* dst, const uintptr_t len);
 	BYTE* TrampHook32(BYTE* src, BYTE* dst, const uintptr_t len);
 }
+

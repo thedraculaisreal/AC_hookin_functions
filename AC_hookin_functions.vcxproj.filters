@@ -33,6 +33,15 @@
     <ClCompile Include="mem\mem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="hook\hook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="feautures\gldraw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="feautures\gltext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="entities\entity.h">
@@ -48,6 +57,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mem\mem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\hook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="feautures\gldraw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="feautures\gltext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

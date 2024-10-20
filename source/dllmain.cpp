@@ -3,7 +3,7 @@
 #include <atomic>
 #include "constants.h"
 #include "../feautures/aimbot.h"
-#include "../mem/mem.h"
+#include "../hook/hook.h"
 
 std::atomic<bool> running(true);
 
@@ -26,7 +26,7 @@ void console(HMODULE hModule) noexcept
     freopen_s(&f, "CONIN$", "r", stdin);
 
     owglSwapBuffers = (twglSwapBuffers)GetProcAddress(GetModuleHandle(L"opengl32.dll"), "wglSwapBuffers");
-    owglSwapBuffers = (twglSwapBuffers)Mem::TrampHook32((BYTE*)owglSwapBuffers, (BYTE*)hkwglSwapBuffers, 5);
+    owglSwapBuffers = (twglSwapBuffers)Hook::TrampHook32((BYTE*)owglSwapBuffers, (BYTE*)hkwglSwapBuffers, 5);
 
     while (running)
     {
