@@ -1,6 +1,17 @@
 #include "hook.h"
 
-bool Hook::Detour32(BYTE* src, BYTE* dst, const uintptr_t len)
+
+void patch(BYTE* dst, BYTE* src, unsigned int size)
+{
+	DWORD oldProtect;
+	VirtualProtect(dst, size, PAGE_EXECUTE_READWRITE, &oldProtect);
+
+	memcpy(dst, src, size);
+	VirtualProtect(dst, size, oldProtect, &oldProtect);
+}
+
+
+bool Detour32(BYTE* src, BYTE* dst, const uintptr_t len)
 {
 	if (len < 5)
 		return false;
@@ -23,7 +34,7 @@ bool Hook::Detour32(BYTE* src, BYTE* dst, const uintptr_t len)
 	VirtualProtect(src, len, curProtection, &curProtection);
 	return true;
 }
-BYTE* Hook::TrampHook32(BYTE* src, BYTE* dst, const uintptr_t len)
+BYTE* TrampHook32(BYTE* src, BYTE* dst, const uintptr_t len)
 {
 	if (len < 5)
 		return 0;
@@ -47,4 +58,42 @@ BYTE* Hook::TrampHook32(BYTE* src, BYTE* dst, const uintptr_t len)
 
 	return gateway;
 
+}
+
+Hook::Hook(BYTE* src, BYTE* dst, BYTE* PtrToGatewayFnPtr, uintptr_t len)
+{
+	this->src = src;
+	this->dst = dst;
+	this->len = len;
+	this->PtrToGatewayFnPtr = PtrToGatewayFnPtr;
+}
+
+Hook::Hook(const char* exportName, const WCHAR* modName, BYTE* dst, BYTE* PtrToGatewayFnPtr, uintptr_t len)
+{
+	HMODULE hMod = GetModuleHandle(modName);
+
+	this->src = (BYTE*)GetProcAddress(hMod, exportName);
+	this->dst = dst;
+	this->len = len;
+	this->PtrToGatewayFnPtr = PtrToGatewayFnPtr;
+}
+
+void Hook::enable()
+{
+	memcpy(originalBytes, src, len);
+	*(uintptr_t*)PtrToGatewayFnPtr = (uintptr_t)TrampHook32(src, dst, len);
+	bStatus = true;
+}
+
+void Hook::disable()
+{
+	patch(src, originalBytes, len);
+}
+
+void Hook::toggle()
+{
+	if (!bStatus)
+		enable();
+	if (bStatus)
+		disable();
 }

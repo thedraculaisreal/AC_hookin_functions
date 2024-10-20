@@ -26,7 +26,7 @@ void console(HMODULE hModule) noexcept
     freopen_s(&f, "CONIN$", "r", stdin);
 
     owglSwapBuffers = (twglSwapBuffers)GetProcAddress(GetModuleHandle(L"opengl32.dll"), "wglSwapBuffers");
-    owglSwapBuffers = (twglSwapBuffers)Hook::TrampHook32((BYTE*)owglSwapBuffers, (BYTE*)hkwglSwapBuffers, 5);
+    owglSwapBuffers = (twglSwapBuffers)TrampHook32((BYTE*)owglSwapBuffers, (BYTE*)hkwglSwapBuffers, 5);
 
     while (running)
     {
