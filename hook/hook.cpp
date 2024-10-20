@@ -68,9 +68,9 @@ Hook::Hook(BYTE* src, BYTE* dst, BYTE* PtrToGatewayFnPtr, uintptr_t len)
 	this->PtrToGatewayFnPtr = PtrToGatewayFnPtr;
 }
 
-Hook::Hook(const char* exportName, const WCHAR* modName, BYTE* dst, BYTE* PtrToGatewayFnPtr, uintptr_t len)
+Hook::Hook(const char* exportName, const char* modName, BYTE* dst, BYTE* PtrToGatewayFnPtr, uintptr_t len)
 {
-	HMODULE hMod = GetModuleHandle(modName);
+	HMODULE hMod = GetModuleHandleA(modName);
 
 	this->src = (BYTE*)GetProcAddress(hMod, exportName);
 	this->dst = dst;

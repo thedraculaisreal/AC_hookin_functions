@@ -12,7 +12,7 @@ BOOL _stdcall hkwglSwapBuffers(HDC hdc)
     reset_pointers();
     aimbot.do_aimbot();
 
-    return owglSwapBuffers(hdc);
+    return wglSwapBuffersGateway(hdc);
 }
 
 void console(HMODULE hModule) noexcept
@@ -25,8 +25,11 @@ void console(HMODULE hModule) noexcept
     freopen_s(&f, "CONOUT$", "w", stdout);
     freopen_s(&f, "CONIN$", "r", stdin);
 
-    owglSwapBuffers = (twglSwapBuffers)GetProcAddress(GetModuleHandle(L"opengl32.dll"), "wglSwapBuffers");
-    owglSwapBuffers = (twglSwapBuffers)TrampHook32((BYTE*)owglSwapBuffers, (BYTE*)hkwglSwapBuffers, 5);
+    Hook SwapBuffersHook("wglSwapBuffers", "opengl32.dll", (BYTE*)hkwglSwapBuffers, (BYTE*)&wglSwapBuffersGateway, 5);
+    SwapBuffersHook.enable();
+
+    Sleep(10000);
+    SwapBuffersHook.disable();
 
     while (running)
     {

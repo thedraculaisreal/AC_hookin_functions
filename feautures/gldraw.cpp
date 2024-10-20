@@ -39,7 +39,7 @@ void GL::drawOutline(float x, float y, float width, float height, float lineWidt
 	glVertex2f(x - 0.5f, y - 0.5f);
 	glVertex2f(x + width + 0.5f, y - 0.5f);
 	glVertex2f(x + width + 0.5f, y + height + 0.5f);
-	glVertex2f(x - 0.5f + width, y + height + 0.5f);
-	glVertex2f(x - 0.5f, y + height - 0.5f);
+	glVertex2f(x - 0.5f, y + height + 0.5f);
+	glVertex2f(x - 0.5f, y - 0.5f);
 	glEnd();
 }
