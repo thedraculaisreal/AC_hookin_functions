@@ -28,10 +28,18 @@ namespace GL
 	public:
 
 		bool bBuilt = false;
-		unsigned int base;
+		unsigned int base{ 0 };
 		HDC hdc = nullptr;
-		int height;
-		int width;
+		int height{ 0 };
+		int width{ 0 };
+
+		const int FONT_HEIGHT{ 15 };
+		const int FONT_WIDTH{ 9 };
+
+		const char* example = "ESP Box";
+		const char* example2 = "I'm inside";
+
+		void draw();
 
 		void build(int height);
 		void print(float x, float y, const unsigned char color[3], const char* format, ...);
@@ -39,4 +47,6 @@ namespace GL
 		Vector3 centerText(float x, float y, float width, float heigt, float textWidth, float textHeight);
 		float centerText(float x, float width, float textWidth);
 	};
+
+	inline Font font;
 }

@@ -95,3 +95,29 @@ float GL::Font::centerText(float x, float width, float textWidth)
 		return (x - (difference / 2));
 	}
 }
+
+GL::Font glFont{ NULL };
+
+void GL::Font::draw()
+{
+	HDC currentHDC = wglGetCurrentDC();
+
+	if (!glFont.bBuilt || currentHDC != glFont.hdc)
+	{
+		glFont.build(FONT_HEIGHT);
+	}
+
+	GL::setupOrtho();
+
+	GL::drawOutline(300, 300, 200, 200, 2.0f, rgb::red);
+
+	float textPointX = glFont.centerText(300, 200, strlen(example) * FONT_WIDTH);
+	float textPointY = 300 - FONT_HEIGHT / 2;
+
+	glFont.print(textPointX, textPointY, rgb::green, "%s", example);
+
+	Vector3 insideTextPoint = glFont.centerText(300, 300 + 100, 200, 200, strlen(example2) * FONT_WIDTH, FONT_HEIGHT);
+	glFont.print(insideTextPoint.x, insideTextPoint.y, rgb::green, "%s", example2);
+
+	GL::restoreGl();
+}

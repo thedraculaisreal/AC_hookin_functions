@@ -4,12 +4,13 @@
 #include "constants.h"
 #include "../feautures/aimbot.h"
 #include "../hook/hook.h"
+#include "../opengl/gldraw.h"
 
 std::atomic<bool> running(true);
 
 BOOL _stdcall hkwglSwapBuffers(HDC hdc)
 {
-    draw();
+    GL::font.draw();
     return wglSwapBuffersGateway(hdc);
 }
 
