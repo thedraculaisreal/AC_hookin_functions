@@ -10,6 +10,7 @@ std::atomic<bool> running(true);
 BOOL _stdcall hkwglSwapBuffers(HDC hdc)
 {
     reset_pointers();
+    draw();
     aimbot.do_aimbot();
 
     return wglSwapBuffersGateway(hdc);

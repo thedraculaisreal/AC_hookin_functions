@@ -4,8 +4,8 @@
 #include <cstdint>
 #include <iostream>
 #include "../entities/entity.h"
-#include "../feautures/gltext.h"
-#include "../feautures/gldraw.h"
+#include "../opengl/gltext.h"
+#include "../opengl/gldraw.h"
 
 
 extern HMODULE hModule;
@@ -18,11 +18,12 @@ typedef BOOL(__stdcall* twglSwapBuffers) (HDC hdc);
 inline twglSwapBuffers wglSwapBuffersGateway;
 
 extern GL::Font glFont;
-extern const int FONT_HEIGHT = 15;
-extern const int FONT_WIDTH = 9;
 
-extern const char* example = "ESP Box";
-extern const char* example2 = "I'm inside";
+extern const int FONT_HEIGHT;
+extern const int FONT_WIDTH;
+
+extern const char* example;
+extern const char* example2;
 
 void draw();
 

@@ -6,6 +6,14 @@ extern Entity* local_player = *(Entity**)(exe_base_address + 0x17E0A8);
 extern DWORD* entity_list = (DWORD*)(exe_base_address + 0x18AC04);
 extern int num_players = (*(int*)(exe_base_address + 0x191FD4)); 
 
+extern const int FONT_HEIGHT = 15;
+extern const int FONT_WIDTH = 9;
+
+extern const char* example = "ESP Box";
+extern const char* example2 = "I'm inside";
+
+extern GL::Font glFont{ NULL };
+
 void reset_pointers()
 {
     do {

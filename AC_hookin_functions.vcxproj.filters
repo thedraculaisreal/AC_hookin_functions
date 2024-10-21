@@ -33,10 +33,10 @@
     <ClCompile Include="hook\hook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="feautures\gldraw.cpp">
+    <ClCompile Include="opengl\gldraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="feautures\gltext.cpp">
+    <ClCompile Include="opengl\gltext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,10 +56,10 @@
     <ClInclude Include="hook\hook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="feautures\gldraw.h">
+    <ClInclude Include="opengl\gldraw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="feautures\gltext.h">
+    <ClInclude Include="opengl\gltext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
