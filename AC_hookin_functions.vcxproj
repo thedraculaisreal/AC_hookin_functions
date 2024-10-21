@@ -169,7 +169,6 @@
   <ItemGroup>
     <ClCompile Include="feautures\aimbot.cpp" />
     <ClCompile Include="opengl\gldraw.cpp" />
-    <ClCompile Include="opengl\gltext.cpp" />
     <ClCompile Include="hook\hook.cpp" />
     <ClCompile Include="math\math.cpp" />
     <ClCompile Include="source\constants.cpp" />
@@ -179,7 +178,6 @@
   <ItemGroup>
     <ClInclude Include="feautures\aimbot.h" />
     <ClInclude Include="opengl\gldraw.h" />
-    <ClInclude Include="opengl\gltext.h" />
     <ClInclude Include="hook\hook.h" />
     <ClInclude Include="math\math.h" />
     <ClInclude Include="source\constants.h" />

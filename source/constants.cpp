@@ -44,7 +44,7 @@ void draw()
 
     glFont.print(textPointX, textPointY, rgb::green, "%s", example);
 
-    vec3 insideTextPoint = glFont.centerText(300, 300 + 100, 200, 200, strlen(example2) * FONT_WIDTH, FONT_HEIGHT);
+    Vector3 insideTextPoint = glFont.centerText(300, 300 + 100, 200, 200, strlen(example2) * FONT_WIDTH, FONT_HEIGHT);
     glFont.print(insideTextPoint.x, insideTextPoint.y, rgb::green, "%s", example2);
 
     GL::restoreGl();

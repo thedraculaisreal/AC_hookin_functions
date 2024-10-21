@@ -9,10 +9,7 @@ std::atomic<bool> running(true);
 
 BOOL _stdcall hkwglSwapBuffers(HDC hdc)
 {
-    reset_pointers();
     draw();
-    aimbot.do_aimbot();
-
     return wglSwapBuffersGateway(hdc);
 }
 
@@ -27,10 +24,8 @@ void console(HMODULE hModule) noexcept
     freopen_s(&f, "CONIN$", "r", stdin);
 
     Hook SwapBuffersHook("wglSwapBuffers", "opengl32.dll", (BYTE*)hkwglSwapBuffers, (BYTE*)&wglSwapBuffersGateway, 5);
-    SwapBuffersHook.enable();
 
-    Sleep(10000);
-    SwapBuffersHook.disable();
+    SwapBuffersHook.enable();
 
     while (running)
     {
@@ -44,24 +39,27 @@ void console(HMODULE hModule) noexcept
         }
     }
 
-    fclose(f);
+    SwapBuffersHook.disable();
+
+    if (f != 0)
+        fclose(f);
 
     FreeConsole();
 
     FreeLibraryAndExitThread(hModule, 0);
 }
 
-void hook(HMODULE hModule) noexcept
+void aimbotHook(HMODULE hModule) noexcept
 {
 
 
-    //while (running)
-    //{
-    //    reset_pointers();
-    //    aimbot.do_aimbot();
-    //}
+    while (running)
+    {
+        reset_pointers();
+        aimbot.do_aimbot();
+    }
 
-    //FreeLibraryAndExitThread(hModule, 0);
+    FreeLibraryAndExitThread(hModule, 0);
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule,
@@ -74,9 +72,12 @@ BOOL APIENTRY DllMain( HMODULE hModule,
         DisableThreadLibraryCalls(hModule);
 
         const auto thread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(console), hModule, 0, nullptr);
+        const auto thread1 = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(aimbotHook), hModule, 0, nullptr);
 
         if (thread)
             CloseHandle(thread);
+        if (thread1)
+            CloseHandle(thread1);
     }
 
     return TRUE;

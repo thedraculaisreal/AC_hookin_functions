@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <iostream>
 #include "../entities/entity.h"
-#include "../opengl/gltext.h"
 #include "../opengl/gldraw.h"
 
 
