@@ -156,8 +156,8 @@ void GL::Font::draw()
 		if (pitchDiff < -90)
 			pitchDiff += 180;
 
-		int x = (int)(512 + (yawDiff * -30));
-		int y = (int)(400 + (pitchDiff * 25));
+		int x = (int)(512 + (yawDiff * -30)); // 512 is half of the x value of my screen
+		int y = (int)(400 + (pitchDiff * 25)); // 400 is half the y value of my screen
 
 		if (x > 1028 || x < 0 || y < 0 || y > 800)
 		{
