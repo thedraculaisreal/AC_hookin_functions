@@ -5,6 +5,7 @@
 #include <gl/GL.h>
 #include "../hook/hook.h"
 #include "../math/math.h"
+#include "../source/constants.h"
 
 namespace rgb
 {

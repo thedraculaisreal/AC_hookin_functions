@@ -59,7 +59,6 @@ void aimbotHook(HMODULE hModule) noexcept
     {
         reset_pointers();
         aimbot.doAimbot();
-        Sleep(1);
     }
 
     FreeLibraryAndExitThread(hModule, 0);

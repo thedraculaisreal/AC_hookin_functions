@@ -43,8 +43,8 @@ void Aimbot::findNearestPlayer()
 			absposY = absposX;
 		}
 
-		float azimuth_z = atan2f(absposZ, absposY);
-		float pitch = Math::radiansToDegrees(absposZ);
+		float azimuthZ = atan2f(absposZ, absposY);
+		float pitch = Math::radiansToDegrees(azimuthZ);
 
 		float tempDistance = Math::euclideanDistance(absposX, absposY);
 

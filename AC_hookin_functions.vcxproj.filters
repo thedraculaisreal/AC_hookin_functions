@@ -36,6 +36,9 @@
     <ClCompile Include="opengl\gldraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="feautures\esp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="entities\entity.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="opengl\gldraw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="feautures\esp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
