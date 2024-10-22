@@ -35,7 +35,8 @@ void console(HMODULE hModule) noexcept
 
         if (input == "quit")
         {
-            std::cout << "Exiting console freed...";
+            std::cout << "Exiting...\n";
+            std::cout << "Console freed.";
             running = false;
         }
     }
@@ -57,7 +58,8 @@ void aimbotHook(HMODULE hModule) noexcept
     while (running)
     {
         reset_pointers();
-        aimbot.do_aimbot();
+        aimbot.doAimbot();
+        Sleep(1);
     }
 
     FreeLibraryAndExitThread(hModule, 0);

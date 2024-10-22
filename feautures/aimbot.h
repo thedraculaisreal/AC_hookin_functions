@@ -6,15 +6,15 @@ class Aimbot
 
 private:
 
-	float closest_player{ -1.0f };
-	float closest_pitch{ NULL };
-	float closest_yaw{ NULL };
+	float closestPlayer{ -1.0f };
+	float closestPitch{ NULL };
+	float closestYaw{ NULL };
 
-	void find_nearest_player();
+	void findNearestPlayer();
 
 public:
 
-	void do_aimbot();
+	void doAimbot();
 
 };
 

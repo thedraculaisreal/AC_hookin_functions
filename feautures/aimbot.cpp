@@ -1,19 +1,19 @@
 #include "aimbot.h"
 
-void Aimbot::find_nearest_player()
+void Aimbot::findNearestPlayer()
 {
-	closest_player = -1.0f;
+	closestPlayer = -1.0f;
 
-	for (int i = 1; i <= num_players; i++)
+	for (int i = 1; i <= numPlayers; i++)
 	{
 
-		DWORD* enemy_offset = (DWORD*)(*entity_list + (i * 4));
-		if (!enemy_offset)
+		DWORD* enemyOffset = (DWORD*)(*entityList + (i * 4));
+		if (!enemyOffset)
 			continue;
 
-		Entity* enemy = (Entity*)(*enemy_offset);
+		Entity* enemy = (Entity*)(*enemyOffset);
 
-		if (!local_player)
+		if (!localPlayer)
 			continue;
 
 		if (!enemy)
@@ -22,53 +22,53 @@ void Aimbot::find_nearest_player()
 		if (enemy->health > 100 || enemy->health <= 0)
 			continue;
 
-		float abspos_x = Math::origin_calc(enemy->o.x, local_player->o.x);
-		float abspos_y = Math::origin_calc(enemy->o.y, local_player->o.y);
-		float abspos_z = Math::origin_calc(enemy->o.z, local_player->o.z);
+		float absposX = Math::originCalc(enemy->o.x, localPlayer->o.x);
+		float absposY = Math::originCalc(enemy->o.y, localPlayer->o.y);
+		float absposZ = Math::originCalc(enemy->o.z, localPlayer->o.z);
 
-		float aizimuth_xy = atan2f(abspos_y, abspos_x);
+		float aizimuthXY = atan2f(absposY, absposX);
 		
-		float yaw = Math::radians_to_degrees(aizimuth_xy);
+		float yaw = Math::radiansToDegrees(aizimuthXY);
 
-		if (abspos_y < 0)
+		if (absposY < 0)
 		{
-			abspos_y *= -1;
+			absposY *= -1;
 		}
-		if (abspos_y < 5)
+		if (absposY < 5)
 		{
-			if (abspos_x < 0)
+			if (absposX < 0)
 			{
-				abspos_x *= -1;
+				absposX *= -1;
 			}
-			abspos_y = abspos_x;
+			absposY = absposX;
 		}
 
-		float azimuth_z = atan2f(abspos_z, abspos_y);
-		float pitch = Math::radians_to_degrees(azimuth_z);
+		float azimuth_z = atan2f(absposZ, absposY);
+		float pitch = Math::radiansToDegrees(absposZ);
 
-		float temp_distance = Math::euclidean_distance(abspos_x, abspos_y);
+		float tempDistance = Math::euclideanDistance(absposX, absposY);
 
-		if (closest_player == -1.0f || temp_distance < closest_player)
+		if (closestPlayer == -1.0f || tempDistance < closestPlayer)
 		{
-			closest_player = temp_distance;
-			closest_yaw = yaw + 90.0f;
-			closest_pitch = pitch;
+			closestPlayer = tempDistance;
+			closestYaw = yaw + 90.0f;
+			closestPitch = pitch;
 		}
 
 	}
 
 }
 
-void Aimbot::do_aimbot()
+void Aimbot::doAimbot()
 {
-	find_nearest_player();
+	findNearestPlayer();
 
-	if (closest_pitch == NULL || closest_yaw == NULL)
+	if (closestPitch == NULL || closestYaw == NULL)
 		return;
 
 	if (!GetAsyncKeyState(VK_XBUTTON2))
 		return;
 
-	local_player->pitch = closest_pitch;
-	local_player->yaw = closest_yaw;
+	localPlayer->pitch = closestPitch;
+	localPlayer->yaw = closestYaw;
 }

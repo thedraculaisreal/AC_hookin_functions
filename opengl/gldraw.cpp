@@ -112,7 +112,7 @@ void GL::Font::draw()
 	GL::drawOutline(300, 300, 200, 200, 2.0f, rgb::red);
 
 	float textPointX = glFont.centerText(300, 200, strlen(example) * FONT_WIDTH);
-	float textPointY = 300 - FONT_HEIGHT / 2;
+	float textPointY = 300.0f - FONT_HEIGHT / 2.0f;
 
 	glFont.print(textPointX, textPointY, rgb::green, "%s", example);
 

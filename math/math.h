@@ -7,9 +7,9 @@
 
 namespace Math
 {
-	float euclidean_distance(float x, float y);
-	float origin_calc(float x, float y);
-	float radians_to_degrees(float azimuth);
+	float euclideanDistance(float x, float y);
+	float originCalc(float x, float y);
+	float radiansToDegrees(float azimuth);
 }
 
 class Vector3
