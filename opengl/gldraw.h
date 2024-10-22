@@ -16,38 +16,35 @@ namespace rgb
 	const GLubyte black[3] = { 0, 0, 0 };
 }
 
-namespace GL
+class GL
 {
-	void setupOrtho();
-	void restoreGl();
 
-	void drawFilledRect(float x, float y, float width, float height, const GLubyte color[3]);
-	void drawOutline(float x, float y, float width, float height, float lineWidth, const GLubyte color[3]);
+private:
 
-	class Font
-	{
-	public:
+    void setupOrtho(); // Sets up orthographic projection for 2D rendering.
+    void restoreGl(); // Restores OpenGL state after rendering.
 
-		bool bBuilt = false;
-		unsigned int base{ 0 };
-		HDC hdc = nullptr;
-		int height{ 0 };
-		int width{ 0 };
+    void drawFilledRect(float x, float y, float width, float height, const GLubyte color[3]) const;
+    void drawOutline(float x, float y, float width, float height, float lineWidth, const GLubyte color[3]) const;
 
-		const int FONT_HEIGHT{ 15 };
-		const int FONT_WIDTH{ 9 };
+    void build(int height); // Initializes OpenGL context/resources.
+    void print(float x, float y, const unsigned char color[3], const char* format, ...);
 
-		const char* example = "ESP Box";
-		const char* example2 = "I'm inside";
+    Vector3 centerText(float x, float y, float width, float height, float textWidth, float textHeight) const;
+    float centerText(float x, float width, float textWidth) const; // Centers text horizontally.
 
-		void draw();
+    bool bBuilt = false; // Flag indicating if the OpenGL context has been built.
+    unsigned int base{ 0 }; // Font base for text rendering.
+    HDC hdc = nullptr; // Handle to the device context for Windows.
+    int height{ 0 }; // Height of the rendering area.
+    int width{ 0 }; // Width of the rendering area.
 
-		void build(int height);
-		void print(float x, float y, const unsigned char color[3], const char* format, ...);
+    const int FONT_HEIGHT{ 15 }; // Default font height.
+    const int FONT_WIDTH{ 9 }; // Default font width.
 
-		Vector3 centerText(float x, float y, float width, float heigt, float textWidth, float textHeight);
-		float centerText(float x, float width, float textWidth);
-	};
+public:
 
-	inline Font font;
-}
+    void draw(); // Triggers the rendering process.
+};
+
+inline GL gl; // Global instance of GL class.

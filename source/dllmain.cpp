@@ -10,7 +10,7 @@ std::atomic<bool> running(true);
 
 BOOL _stdcall hkwglSwapBuffers(HDC hdc)
 {
-    GL::font.draw();
+    gl.draw();
     return wglSwapBuffersGateway(hdc);
 }
 

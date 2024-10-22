@@ -20,7 +20,7 @@ void GL::restoreGl()
 	glPopAttrib();
 }
 
-void GL::drawFilledRect(float x, float y, float width, float height, const GLubyte color[3])
+void GL::drawFilledRect(float x, float y, float width, float height, const GLubyte color[3]) const
 {
 	glColor3ub(color[0], color[1], color[2]);
 	glBegin(GL_QUADS);
@@ -31,7 +31,7 @@ void GL::drawFilledRect(float x, float y, float width, float height, const GLuby
 	glEnd();
 }
 
-void GL::drawOutline(float x, float y, float width, float height, float lineWidth, const GLubyte color[3])
+void GL::drawOutline(float x, float y, float width, float height, float lineWidth, const GLubyte color[3]) const
 {
 	glLineWidth(lineWidth);
 	glBegin(GL_LINE_STRIP);
@@ -44,7 +44,7 @@ void GL::drawOutline(float x, float y, float width, float height, float lineWidt
 	glEnd();
 }
 
-void GL::Font::build(int height)
+void GL::build(int height)
 {
 	hdc = wglGetCurrentDC();
 	base = glGenLists(96);                                                    // mono spaced font, dont need the width of every character within string
@@ -56,7 +56,7 @@ void GL::Font::build(int height)
 
 	bBuilt = true;
 }
-void GL::Font::print(float x, float y, const unsigned char color[3], const char* format, ...)
+void GL::print(float x, float y, const unsigned char color[3], const char* format, ...)
 {
 	glColor3ub(color[0], color[1], color[2]);
 	glRasterPos2f(x, y);
@@ -74,7 +74,7 @@ void GL::Font::print(float x, float y, const unsigned char color[3], const char*
 	glPopAttrib();
 }
 
-Vector3 GL::Font::centerText(float x, float y, float width, float heigt, float textWidth, float textHeight)
+Vector3 GL::centerText(float x, float y, float width, float heigt, float textWidth, float textHeight) const
 {
 	Vector3 text;
 	text.x = x + (width - textWidth) / 2;
@@ -82,7 +82,7 @@ Vector3 GL::Font::centerText(float x, float y, float width, float heigt, float t
 	return text;
 }
 
-float GL::Font::centerText(float x, float width, float textWidth)
+float GL::centerText(float x, float width, float textWidth) const
 {
 	if (width > textWidth)
 	{
@@ -96,15 +96,14 @@ float GL::Font::centerText(float x, float width, float textWidth)
 	}
 }
 
-GL::Font glFont{ NULL };
 
-void GL::Font::draw()
+void GL::draw()
 {
 	HDC currentHDC = wglGetCurrentDC();
 
-	if (!glFont.bBuilt || currentHDC != glFont.hdc)
+	if (!bBuilt || currentHDC != hdc)
 	{
-		glFont.build(FONT_HEIGHT);
+		build(FONT_HEIGHT);
 	}
 
 	GL::setupOrtho();
@@ -137,8 +136,8 @@ void GL::Font::draw()
 
 		yaw += 90.0f;
 
-		float azimuth_z = atan2f(absposZ, absposY);
-		float pitch = Math::radiansToDegrees(absposZ);
+		float azimuthZ = atan2f(absposZ, absposY);
+		float pitch = Math::radiansToDegrees(azimuthZ);
 
 		float localYaw = localPlayer->yaw;
 		float localPitch = localPlayer->pitch;
@@ -156,22 +155,33 @@ void GL::Font::draw()
 		if (pitchDiff < -90)
 			pitchDiff += 180;
 
-		int x = (int)(512 + (yawDiff * -15)); // 512 is half of the x value of my screen
-		int y = (int)(400 + (pitchDiff * 12)); // 400 is half the y value of my screen
-
-		x -= 100;
+		int x = (int)(512 + (yawDiff * -10)); // 512 is half of the x value of my screen
+		int y = (int)(400 + (pitchDiff * 10)); // 400 is half the y value of my screen
 
 		if (x > 1028 || x < 0 || y < 0 || y > 800)
 		{
 			continue;
 		}
 
-		GL::drawOutline(x, y, 150, 200, 2.0f, rgb::red);
+		float tempDistance = Math::euclideanDistance(absposX, absposY);
 
-		float textPointX = glFont.centerText(x, 150, strlen(example) * FONT_WIDTH);
+		float width;
+
+		float height;
+
+		width = (240.0f / (tempDistance - 5.0f)) + 30.0f;
+		height = (300.0f / (tempDistance - 5.0f)) + 40.0f;
+
+		x -= 50;
+
+		x += 6 * (int)sqrtf(tempDistance);
+
+		GL::drawOutline(x, y, width, height, 2.0f, rgb::red);
+		
+		float textPointX = centerText(x, width, strlen(enemy->name) * FONT_WIDTH);
 		float textPointY = y - FONT_HEIGHT / 2.0f;
 
-		glFont.print(textPointX, textPointY, rgb::green, "%s", enemy->name);
+		print(textPointX, textPointY, rgb::green, "%s", enemy->name);
 	}
 	/*
 	Vector3 insideTextPoint = glFont.centerText(300, 300 + 100, 200, 200, strlen(example2) * FONT_WIDTH, FONT_HEIGHT);
