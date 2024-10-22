@@ -1,4 +1,8 @@
-﻿  dllmain.cpp
+﻿  gldraw.cpp
+C:\Users\schwarztoter\source\repos\AC_hookin_functions\opengl\gldraw.cpp(169,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\schwarztoter\source\repos\AC_hookin_functions\opengl\gldraw.cpp(169,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\schwarztoter\source\repos\AC_hookin_functions\opengl\gldraw.cpp(171,64): warning C4244: 'argument': conversion from 'size_t' to 'float', possible loss of data
+C:\Users\schwarztoter\source\repos\AC_hookin_functions\opengl\gldraw.cpp(171,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   AC_hookin_functions.vcxproj -> C:\Users\schwarztoter\source\repos\AC_hookin_functions\build\AC_hookin_functions.dll
   'pwsh.exe' is not recognized as an internal or external command,
   operable program or batch file.

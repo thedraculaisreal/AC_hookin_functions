@@ -156,8 +156,10 @@ void GL::Font::draw()
 		if (pitchDiff < -90)
 			pitchDiff += 180;
 
-		int x = (int)(512 + (yawDiff * -30)); // 512 is half of the x value of my screen
-		int y = (int)(400 + (pitchDiff * 25)); // 400 is half the y value of my screen
+		int x = (int)(512 + (yawDiff * -15)); // 512 is half of the x value of my screen
+		int y = (int)(400 + (pitchDiff * 12)); // 400 is half the y value of my screen
+
+		x -= 100;
 
 		if (x > 1028 || x < 0 || y < 0 || y > 800)
 		{
@@ -165,13 +167,13 @@ void GL::Font::draw()
 		}
 
 		GL::drawOutline(x, y, 150, 200, 2.0f, rgb::red);
+
+		float textPointX = glFont.centerText(x, 150, strlen(example) * FONT_WIDTH);
+		float textPointY = y - FONT_HEIGHT / 2.0f;
+
+		glFont.print(textPointX, textPointY, rgb::green, "%s", enemy->name);
 	}
-
-	/*float textPointX = glFont.centerText(300, 200, strlen(example) * FONT_WIDTH);
-	float textPointY = 300.0f - FONT_HEIGHT / 2.0f;
-
-	glFont.print(textPointX, textPointY, rgb::green, "%s", example);
-
+	/*
 	Vector3 insideTextPoint = glFont.centerText(300, 300 + 100, 200, 200, strlen(example2) * FONT_WIDTH, FONT_HEIGHT);
 	glFont.print(insideTextPoint.x, insideTextPoint.y, rgb::green, "%s", example2);
 	*/
