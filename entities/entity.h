@@ -23,8 +23,3 @@ public:
     int32_t Team; //0x0308
 
 };
-
-class EntityList
-{
-	
-};
