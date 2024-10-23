@@ -2,7 +2,7 @@
 
 void GL::setupOrtho()
 {
-	glPushAttrib(GL_ALL_ATTRIB_BITS); // push and pop the server attribute stack, GL_ALL_ATTRIB_BITS saves all stackable states
+	glPushAttrib(GL_ALL_ATTRIB_BITS); // push server attribute stack, GL_ALL_ATTRIB_BITS saves all stackable states
 	glPushMatrix(); // pushes the current matrix stack down by one
 	GLint viewport[4]; // Now, viewport contains the values:
 	// viewport[0] = x position of the lower-left corner
@@ -161,7 +161,7 @@ void GL::draw()
 		if (pitchDiff < -90)
 			pitchDiff += 180;
 
-		int x = (int)(514 + (yawDiff * -10)); // 512 is half of the x value of my screen
+		int x = (int)(514 + (yawDiff * -10)); // 514 is half of the x value of my screen
 		int y = (int)(400 + (pitchDiff * 5)); // 400 is half the y value of my screen
 
 		if (x > 1028 || x < 0 || y < 0 || y > 800) // if box is off screen dont render.
