@@ -63,11 +63,10 @@ void Aimbot::doAimbot()
 {
 	findNearestPlayer();
 
-	if (closestPitch == NULL || closestYaw == NULL)
-		return;
-
 	if (!GetAsyncKeyState(VK_XBUTTON2))
 		return;
+
+	Sleep(1);
 
 	localPlayer->pitch = closestPitch;
 	localPlayer->yaw = closestYaw;

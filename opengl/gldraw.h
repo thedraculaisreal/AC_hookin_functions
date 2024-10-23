@@ -24,6 +24,7 @@ private:
     void setupOrtho(); // Sets up orthographic projection for 2D rendering.
     void restoreGl(); // Restores OpenGL state after rendering.
 
+    void filledBox(float x, float y, float width, float height, const GLubyte color[3]) const;
     void drawOutline(float x, float y, float width, float height, float lineWidth, const GLubyte color[3]) const;
 
     void build(int height); // Initializes OpenGL context/resources.

@@ -24,6 +24,18 @@ void GL::restoreGl()
 	glPopAttrib(); // restores the values of the state variables saved with the last glPushAttrib command
 }
 
+void GL::filledBox(float x, float y, float width, float height, const GLubyte color[3]) const
+{
+
+	glBegin(GL_QUADS);
+	glColor3ub(color[0], color[1], color[2]);
+	glVertex2f(x, y); // each vertex connects to the one created afterwards.
+	glVertex2f(x + width, y);
+	glVertex2f(x + width, y + height);
+	glVertex2f(x, y + height);
+	glEnd();
+}
+
 void GL::drawOutline(float x, float y, float width, float height, float lineWidth, const GLubyte color[3]) const
 {
 	glLineWidth(lineWidth);
@@ -148,8 +160,8 @@ void GL::draw()
 		if (pitchDiff < -90)
 			pitchDiff += 180;
 
-		int x = (int)(512 + (yawDiff * -10)); // 512 is half of the x value of my screen
-		int y = (int)(400 + (pitchDiff * 10)); // 400 is half the y value of my screen
+		int x = (int)(514 + (yawDiff * -10)); // 512 is half of the x value of my screen
+		int y = (int)(400 + (pitchDiff * 5)); // 400 is half the y value of my screen
 
 		if (x > 1024 || x < 0 || y < 0 || y > 800) // if box is off screen dont render.
 		{
@@ -162,8 +174,11 @@ void GL::draw()
 
 		float height;
 
-		width = (240.0f / (tempDistance - 5.0f)) + 30.0f; // formula for width, to keep box on target the right size
-		height = (300.0f / (tempDistance - 5.0f)) + 40.0f; // formula for height, to keep box on target the right size
+		width = (180.0f / (tempDistance - 5.0f)) + 45.0f; // formula for width, to keep box on target the right size
+		height = (220.0f / (tempDistance - 5.0f)) + 60.0f; // formula for height, to keep box on target the right size
+
+		float maxHealth = 100.0f;  // max health value
+		float healthBarHeight = (height * (enemy->health / maxHealth)); // Scale the health bar
 
 		x -= 50; // offset for x value
 
@@ -175,6 +190,10 @@ void GL::draw()
 		float textPointY = y - FONT_HEIGHT / 2.0f;
 
 		print(textPointX, textPointY, rgb::green, "%s", enemy->name); // writes name in green text above the box
+
+		GL::drawOutline(x - 9.5f, y, 7.0f, height, 2.0f, rgb::red);
+
+		GL::filledBox(x - 9.0f, y, 7.0f, healthBarHeight, rgb::green);
 	}
 
 	GL::restoreGl();
