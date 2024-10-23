@@ -7,7 +7,7 @@ class Esp
 
 private:
 
-	float maxHealth = 100.0f;  // max health value
+	const float maxHealth = 100.0f;  // max health value
 
 	const int xFormula(int x, float tempDistance);
 
