@@ -163,7 +163,7 @@ void GL::draw()
 		int x = (int)(514 + (yawDiff * -10)); // 512 is half of the x value of my screen
 		int y = (int)(400 + (pitchDiff * 5)); // 400 is half the y value of my screen
 
-		if (x > 1024 || x < 0 || y < 0 || y > 800) // if box is off screen dont render.
+		if (x > 1028 || x < 0 || y < 0 || y > 800) // if box is off screen dont render.
 		{
 			continue;
 		}
