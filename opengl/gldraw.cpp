@@ -2,22 +2,26 @@
 
 void GL::setupOrtho()
 {
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	glPushMatrix();
-	GLint viewport[4];
-	glGetIntegerv(GL_VIEWPORT, viewport);
-	glViewport(0, 0, viewport[2], viewport[3]);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, viewport[2], viewport[3], 0, -1, 1);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glDisable(GL_DEPTH_TEST);
+	glPushAttrib(GL_ALL_ATTRIB_BITS); // push and pop the server attribute stack, GL_ALL_ATTRIB_BITS saves all stackable states
+	glPushMatrix(); // push and pop the current matrix stack
+	GLint viewport[4]; // Now, viewport contains the values:
+	// viewport[0] = x position of the lower-left corner
+	// viewport[1] = y position of the lower-left corner
+	// viewport[2] = width of the viewport
+	// viewport[3] = height of the viewport
+	glGetIntegerv(GL_VIEWPORT, viewport); // takes viewport settings and stores them in the viewport array
+	glViewport(0, 0, viewport[2], viewport[3]); // sets viewport from screen coordinates
+	glMatrixMode(GL_PROJECTION); // applies matrix operations to the stack for projection
+	glLoadIdentity(); // replace the current matrix with the identity matrix
+	glOrtho(0, viewport[2], viewport[3], 0, -1, 1); // multiply the current matrix with an orthographic matrix
+	glMatrixMode(GL_MODELVIEW); // applies subsequent matrix operations to the modelview matrix stack
+	glLoadIdentity(); // replace the current matrix with the identity matrix
+	glDisable(GL_DEPTH_TEST); // disables depth testing
 }
 void GL::restoreGl()
 {
-	glPopMatrix();
-	glPopAttrib();
+	glPopMatrix(); // pops the current matrix stack, replacing the current matrix with the one below it on the stack
+	glPopAttrib(); // restores the values of the state variables saved with the last glPushAttrib command
 }
 
 void GL::drawOutline(float x, float y, float width, float height, float lineWidth, const GLubyte color[3]) const
@@ -25,7 +29,7 @@ void GL::drawOutline(float x, float y, float width, float height, float lineWidt
 	glLineWidth(lineWidth);
 	glBegin(GL_LINE_STRIP);
 	glColor3ub(color[0], color[1], color[2]);
-	glVertex2f(x , y );
+	glVertex2f(x , y ); // each vertex connects to the one created afterwards.
 	glVertex2f(x + width , y );
 	glVertex2f(x + width , y + height );
 	glVertex2f(x , y + height );
@@ -147,35 +151,31 @@ void GL::draw()
 		int x = (int)(512 + (yawDiff * -10)); // 512 is half of the x value of my screen
 		int y = (int)(400 + (pitchDiff * 10)); // 400 is half the y value of my screen
 
-		if (x > 1028 || x < 0 || y < 0 || y > 800)
+		if (x > 1024 || x < 0 || y < 0 || y > 800) // if box is off screen dont render.
 		{
 			continue;
 		}
 
-		float tempDistance = Math::euclideanDistance(absposX, absposY);
+		float tempDistance = Math::euclideanDistance(absposX, absposY); // calculates distance to adjust size of box
 
 		float width;
 
 		float height;
 
-		width = (240.0f / (tempDistance - 5.0f)) + 30.0f;
-		height = (300.0f / (tempDistance - 5.0f)) + 40.0f;
+		width = (240.0f / (tempDistance - 5.0f)) + 30.0f; // formula for width, to keep box on target the right size
+		height = (300.0f / (tempDistance - 5.0f)) + 40.0f; // formula for height, to keep box on target the right size
 
-		x -= 50;
+		x -= 50; // offset for x value
 
-		x += 6 * (int)sqrtf(tempDistance);
+		x += 6 * (int)sqrtf(tempDistance); // formula for increasing x based on distance.
 
-		GL::drawOutline(x, y, width, height, 2.0f, rgb::red);
+		GL::drawOutline(x, y, width, height, 2.0f, rgb::red); // draws from vertice to vertice using GL_LINE_STRIP in opengl
 		
-		float textPointX = centerText(x, width, strlen(enemy->name) * FONT_WIDTH);
+		float textPointX = centerText(x, width, strlen(enemy->name) * FONT_WIDTH); 
 		float textPointY = y - FONT_HEIGHT / 2.0f;
 
-		print(textPointX, textPointY, rgb::green, "%s", enemy->name);
+		print(textPointX, textPointY, rgb::green, "%s", enemy->name); // writes name in green text above the box
 	}
-	/*
-	Vector3 insideTextPoint = glFont.centerText(300, 300 + 100, 200, 200, strlen(example2) * FONT_WIDTH, FONT_HEIGHT);
-	glFont.print(insideTextPoint.x, insideTextPoint.y, rgb::green, "%s", example2);
-	*/
 
 	GL::restoreGl();
 }

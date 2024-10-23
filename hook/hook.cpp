@@ -80,7 +80,7 @@ void Hook::enable()
 
 void Hook::disable()
 {
-	patch(src, originalBytes, len);
+	patch(src, originalBytes, len); // Restores bytes.
 }
 
 void Hook::toggle()
