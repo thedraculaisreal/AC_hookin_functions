@@ -17,10 +17,10 @@ bool Detour32(BYTE* src, BYTE* dst, const uintptr_t len)
 		return false;
 
 	// Old protection before we overwrite it
-	DWORD curProtection;
+	DWORD oldProtection;
 
 	// Gives permission to write to the executing memory, which is disabled by default by windows
-	VirtualProtect(src, len, PAGE_EXECUTE_READWRITE, &curProtection);
+	VirtualProtect(src, len, PAGE_EXECUTE_READWRITE, &oldProtection);
 
 	// Calculation for new address
 	uintptr_t relativeAddress = dst - src - 5;
@@ -31,7 +31,7 @@ bool Detour32(BYTE* src, BYTE* dst, const uintptr_t len)
 	// Address for hooking
 	*(uintptr_t*)(src + 1) = relativeAddress;
 
-	VirtualProtect(src, len, curProtection, &curProtection);
+	VirtualProtect(src, len, oldProtection, &oldProtection);
 	return true;
 }
 BYTE* TrampHook32(BYTE* src, BYTE* dst, const uintptr_t len)
@@ -58,14 +58,6 @@ BYTE* TrampHook32(BYTE* src, BYTE* dst, const uintptr_t len)
 
 	return gateway;
 
-}
-
-Hook::Hook(BYTE* src, BYTE* dst, BYTE* PtrToGatewayFnPtr, uintptr_t len)
-{
-	this->src = src;
-	this->dst = dst;
-	this->len = len;
-	this->PtrToGatewayFnPtr = PtrToGatewayFnPtr;
 }
 
 Hook::Hook(const char* exportName, const char* modName, BYTE* dst, BYTE* PtrToGatewayFnPtr, uintptr_t len)

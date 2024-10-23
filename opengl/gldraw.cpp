@@ -20,34 +20,23 @@ void GL::restoreGl()
 	glPopAttrib();
 }
 
-void GL::drawFilledRect(float x, float y, float width, float height, const GLubyte color[3]) const
-{
-	glColor3ub(color[0], color[1], color[2]);
-	glBegin(GL_QUADS);
-	glVertex2f(x, y);
-	glVertex2f(x + width, y);
-	glVertex2f(x + width, y + height);
-	glVertex2f(x, y + height);
-	glEnd();
-}
-
 void GL::drawOutline(float x, float y, float width, float height, float lineWidth, const GLubyte color[3]) const
 {
 	glLineWidth(lineWidth);
 	glBegin(GL_LINE_STRIP);
 	glColor3ub(color[0], color[1], color[2]);
-	glVertex2f(x - 0.5f, y - 0.5f);
-	glVertex2f(x + width + 0.5f, y - 0.5f);
-	glVertex2f(x + width + 0.5f, y + height + 0.5f);
-	glVertex2f(x - 0.5f, y + height + 0.5f);
-	glVertex2f(x - 0.5f, y - 0.5f);
+	glVertex2f(x , y );
+	glVertex2f(x + width , y );
+	glVertex2f(x + width , y + height );
+	glVertex2f(x , y + height );
+	glVertex2f(x , y );
 	glEnd();
 }
 
 void GL::build(int height)
 {
 	hdc = wglGetCurrentDC();
-	base = glGenLists(96);                                                    // mono spaced font, dont need the width of every character within string
+	base = glGenLists(96);   // mono spaced font, dont need the width of every character within string
 	HFONT hFont = CreateFontA(-height, 0, 0, 0, FW_MEDIUM, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, FF_DONTCARE | DEFAULT_PITCH, "Consolas");
 	HFONT hOldFont = (HFONT)SelectObject(hdc, hFont);
 	wglUseFontBitmaps(hdc, 32, 96, base);
