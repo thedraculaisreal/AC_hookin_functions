@@ -3,7 +3,7 @@
 void GL::setupOrtho()
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS); // push and pop the server attribute stack, GL_ALL_ATTRIB_BITS saves all stackable states
-	glPushMatrix(); // push and pop the current matrix stack
+	glPushMatrix(); // pushes the current matrix stack down by one
 	GLint viewport[4]; // Now, viewport contains the values:
 	// viewport[0] = x position of the lower-left corner
 	// viewport[1] = y position of the lower-left corner
@@ -39,7 +39,7 @@ void GL::drawOutline(float x, float y, float width, float height, float lineWidt
 
 void GL::build(int height)
 {
-	hdc = wglGetCurrentDC();
+	hdc = wglGetCurrentDC(); // handle to device context associated with opengl
 	base = glGenLists(96);   // mono spaced font, dont need the width of every character within string
 	HFONT hFont = CreateFontA(-height, 0, 0, 0, FW_MEDIUM, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, FF_DONTCARE | DEFAULT_PITCH, "Consolas");
 	HFONT hOldFont = (HFONT)SelectObject(hdc, hFont);
