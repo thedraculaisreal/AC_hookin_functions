@@ -21,5 +21,4 @@ public:
     char name[16]; //0x0204
     char pad_0208[256]; //0x0208
     int32_t Team; //0x0308
-
 };

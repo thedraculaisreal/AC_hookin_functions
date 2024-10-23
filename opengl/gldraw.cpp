@@ -61,6 +61,7 @@ void GL::build(int height)
 
 	bBuilt = true;
 }
+
 void GL::print(float x, float y, const unsigned char color[3], const char* format, ...)
 {
 	glColor3ub(color[0], color[1], color[2]);
@@ -174,15 +175,15 @@ void GL::draw()
 
 		float height;
 
-		width = (180.0f / (tempDistance - 5.0f)) + 45.0f; // formula for width, to keep box on target the right size
-		height = (220.0f / (tempDistance - 5.0f)) + 60.0f; // formula for height, to keep box on target the right size
+		width = (200.0f / (tempDistance - 5.0f)) + 30.0f; // formula for width, to keep box on target the right size
+		height = (250.0f / (tempDistance - 5.0f)) + 50.0f; // formula for height, to keep box on target the right size
 
 		float maxHealth = 100.0f;  // max health value
 		float healthBarHeight = (height * (enemy->health / maxHealth)); // Scale the health bar
 
 		x -= 50; // offset for x value
 
-		x += 6 * (int)sqrtf(tempDistance); // formula for increasing x based on distance.
+		x += 5 * (int)sqrtf(tempDistance); // formula for increasing x based on distance.
 
 		GL::drawOutline(x, y, width, height, 2.0f, rgb::red); // draws from vertice to vertice using GL_LINE_STRIP in opengl
 		
