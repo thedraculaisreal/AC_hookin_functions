@@ -175,8 +175,8 @@ void GL::draw()
 
 		float height;
 
-		width = (200.0f / (tempDistance - 5.0f)) + 30.0f; // formula for width, to keep box on target the right size
-		height = (250.0f / (tempDistance - 5.0f)) + 50.0f; // formula for height, to keep box on target the right size
+		width = (250.0f / (tempDistance - 6.0f)) + 30.0f; // formula for width, to keep box on target the right size
+		height = (370.0f / (tempDistance - 6.0f)) + 50.0f; // formula for height, to keep box on target the right size
 
 		float maxHealth = 100.0f;  // max health value
 		float healthBarHeight = (height * (enemy->health / maxHealth)); // Scale the health bar
