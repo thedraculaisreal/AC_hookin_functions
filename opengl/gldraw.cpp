@@ -49,6 +49,16 @@ void GL::drawOutline(float x, float y, float width, float height, float lineWidt
 	glEnd();
 }
 
+void GL::drawLine(float localX, float localY, float enemyX , float enemyY, float lineWidth, const GLubyte color[3]) const
+{
+	glLineWidth(lineWidth);
+	glBegin(GL_LINE_STRIP);
+	glColor3ub(color[0], color[1], color[2]);
+	glVertex2f(localX , localY);
+	glVertex2f(enemyX , enemyY);
+	glEnd();
+}
+
 void GL::build(int height)
 {
 	hdc = wglGetCurrentDC(); // handle to device context associated with opengl
@@ -114,88 +124,7 @@ void GL::draw()
 
 	GL::setupOrtho();
 
-	for (int i = 1; i <= numPlayers; i++)
-	{
-
-		DWORD* enemyOffset = (DWORD*)(*entityList + (i * 4));
-		if (!enemyOffset)
-			continue;
-
-		Entity* enemy = (Entity*)(*enemyOffset);
-
-		if (!localPlayer)
-			continue;
-
-		if (!enemy)
-			continue;
-
-		if (enemy->health > 100 || enemy->health <= 0)
-			continue;
-
-		float absposX = Math::originCalc(enemy->o.x, localPlayer->o.x);
-		float absposY = Math::originCalc(enemy->o.y, localPlayer->o.y);
-		float absposZ = Math::originCalc(enemy->o.z, localPlayer->o.z);
-
-		float aizimuthXY = atan2f(absposY, absposX);
-
-		float yaw = Math::radiansToDegrees(aizimuthXY);
-
-		yaw += 90.0f;
-
-		float azimuthZ = atan2f(absposZ, absposY);
-		float pitch = Math::radiansToDegrees(azimuthZ);
-
-		float localYaw = localPlayer->yaw;
-		float localPitch = localPlayer->pitch;
-
-		float yawDiff = localYaw - yaw;
-		float pitchDiff = localPitch - pitch;
-
-		if (yawDiff > 180)
-			yawDiff -= 360;
-		if (yawDiff < -180)
-			yawDiff -= yawDiff + 360;
-
-		if (pitchDiff > 90)
-			pitchDiff -= 180;
-		if (pitchDiff < -90)
-			pitchDiff += 180;
-
-		int x = (int)(514 + (yawDiff * -10)); // 514 is half of the x value of my screen
-		int y = (int)(400 + (pitchDiff * 5)); // 400 is half the y value of my screen
-
-		if (x > 1028 || x < 0 || y < 0 || y > 800) // if box is off screen dont render.
-		{
-			continue;
-		}
-
-		float tempDistance = Math::euclideanDistance(absposX, absposY); // calculates distance to adjust size of box
-
-		float width;
-
-		float height;
-
-		width = (250.0f / (tempDistance - 6.0f)) + 30.0f; // formula for width, to keep box on target the right size
-		height = (370.0f / (tempDistance - 6.0f)) + 50.0f; // formula for height, to keep box on target the right size
-
-		float maxHealth = 100.0f;  // max health value
-		float healthBarHeight = (height * (enemy->health / maxHealth)); // Scale the health bar
-
-		x -= 50; // offset for x value
-
-		x += 5 * (int)sqrtf(tempDistance); // formula for increasing x based on distance.
-
-		GL::drawOutline(x, y, width, height, 2.0f, rgb::red); // draws from vertice to vertice using GL_LINE_STRIP in opengl
-		
-		float textPointX = centerText(x, width, strlen(enemy->name) * FONT_WIDTH); 
-		float textPointY = y - FONT_HEIGHT / 2.0f;
-
-		print(textPointX, textPointY, rgb::green, "%s", enemy->name); // writes name in green text above the box
-
-		GL::drawOutline(x - 9.5f, y, 7.0f, height, 2.0f, rgb::red);
-
-		GL::filledBox(x - 9.0f, y, 7.0f, healthBarHeight, rgb::green);
-	}
+	esp.doEsp();
 
 	GL::restoreGl();
 }

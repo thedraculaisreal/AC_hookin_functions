@@ -6,6 +6,7 @@
 #include "../hook/hook.h"
 #include "../math/math.h"
 #include "../source/constants.h"
+#include "../feautures/esp.h"
 
 namespace rgb
 {
@@ -24,14 +25,7 @@ private:
     void setupOrtho(); // Sets up orthographic projection for 2D rendering.
     void restoreGl(); // Restores OpenGL state after rendering.
 
-    void filledBox(float x, float y, float width, float height, const GLubyte color[3]) const;
-    void drawOutline(float x, float y, float width, float height, float lineWidth, const GLubyte color[3]) const;
-
     void build(int height); // Initializes OpenGL context/resources.
-    void print(float x, float y, const unsigned char color[3], const char* format, ...);
-
-    Vector3 centerText(float x, float y, float width, float height, float textWidth, float textHeight) const;
-    float centerText(float x, float width, float textWidth) const; // Centers text horizontally.
 
     bool bBuilt = false; // Flag indicating if the OpenGL context has been built.
     unsigned int base{ 0 }; // Font base for text rendering.
@@ -39,12 +33,18 @@ private:
     int height{ 0 }; // Height of the rendering area.
     int width{ 0 }; // Width of the rendering area.
 
+public:
+
     const int FONT_HEIGHT{ 15 }; // Default font height.
     const int FONT_WIDTH{ 9 }; // Default font width.
 
-public:
-
+    void print(float x, float y, const unsigned char color[3], const char* format, ...);
     void draw(); // Triggers the rendering process.
+    void filledBox(float x, float y, float width, float height, const GLubyte color[3]) const;
+    void drawOutline(float x, float y, float width, float height, float lineWidth, const GLubyte color[3]) const;
+    void drawLine(float localX, float localY, float enemyX, float enemyY, float lineWidth, const GLubyte color[3]) const;
+    Vector3 centerText(float x, float y, float width, float height, float textWidth, float textHeight) const;
+    float centerText(float x, float width, float textWidth) const; // Centers text horizontally.
 };
 
 inline GL gl; // Global instance of GL class.

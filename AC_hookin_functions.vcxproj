@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="feautures\esp.cpp" />
     <ClCompile Include="feautures\aimbot.cpp" />
     <ClCompile Include="opengl\gldraw.cpp" />
     <ClCompile Include="hook\hook.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="source\dllmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="feautures\esp.h" />
     <ClInclude Include="feautures\aimbot.h" />
     <ClInclude Include="opengl\gldraw.h" />
     <ClInclude Include="hook\hook.h" />
