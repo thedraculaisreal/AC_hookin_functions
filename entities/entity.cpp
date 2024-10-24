@@ -34,6 +34,6 @@ void EntityList::entListLoop()
         list.push_back(enemy);
     }
 
-    entities.clear();
+    //entities.clear();
     entities.assign(list.begin(), list.end());
 }
