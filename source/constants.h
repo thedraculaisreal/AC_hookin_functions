@@ -14,5 +14,3 @@ extern int numPlayers;
 
 typedef BOOL(__stdcall* twglSwapBuffers) (HDC hdc);
 inline twglSwapBuffers wglSwapBuffersGateway;
-
-void reset_pointers();

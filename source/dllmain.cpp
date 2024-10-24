@@ -16,7 +16,7 @@ BOOL _stdcall hkwglSwapBuffers(HDC hdc)
 
 void console(HMODULE hModule) noexcept
 {
-
+    Sleep(1000);
     AllocConsole();
 
     // Redirect the standard input/output streams to the console
@@ -39,6 +39,8 @@ void console(HMODULE hModule) noexcept
             std::cout << "Console freed.";
             running = false;
         }
+        
+        Sleep(1);
     }
 
     SwapBuffersHook.disable();
@@ -53,15 +55,22 @@ void console(HMODULE hModule) noexcept
 
 void aimbotHook(HMODULE hModule) noexcept
 {
-
+    Sleep(1000);
 
     while (running)
     {
-        reset_pointers();
         aimbot.doAimbot();
     }
 
     FreeLibraryAndExitThread(hModule, 0);
+}
+
+void entLoop(HMODULE hModule) noexcept
+{
+    while (running)
+    {
+        entlist.entListLoop();
+    }
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule,
@@ -75,11 +84,14 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
         const auto thread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(console), hModule, 0, nullptr);
         const auto thread1 = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(aimbotHook), hModule, 0, nullptr);
+        const auto thread2 = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(entLoop), hModule, 0, nullptr);
 
         if (thread)
             CloseHandle(thread);
         if (thread1)
             CloseHandle(thread1);
+        if (thread2)
+            CloseHandle(thread2);
     }
 
     return TRUE;

@@ -22,3 +22,14 @@ public:
     char pad_0208[256]; //0x0208
     int32_t Team; //0x0308
 };
+
+class EntityList
+{
+public:
+
+    std::vector<Entity*> entities;
+
+    void entListLoop();
+};
+
+inline EntityList entlist;
