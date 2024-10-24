@@ -5,20 +5,11 @@ void Esp::doEsp()
 	for (const auto enemy : entlist.entities)
 	{
 
-		/*DWORD* enemyOffset = (DWORD*)(*entityList + (i * 4));
-		if (!enemyOffset)
-			continue;
-
-		Entity* enemy = (Entity*)(*enemyOffset);
-
-		if (!localPlayer)
-			continue;
-
 		if (!enemy)
 			continue;
 
 		if (enemy->health > 100 || enemy->health <= 0)
-			continue;*/
+			continue;
 
 		float absposX = Math::originCalc(enemy->o.x, localPlayer->o.x);
 		float absposY = Math::originCalc(enemy->o.y, localPlayer->o.y);

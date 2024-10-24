@@ -16,7 +16,6 @@ BOOL _stdcall hkwglSwapBuffers(HDC hdc)
 
 void console(HMODULE hModule) noexcept
 {
-    Sleep(1000);
     AllocConsole();
 
     // Redirect the standard input/output streams to the console
@@ -55,7 +54,6 @@ void console(HMODULE hModule) noexcept
 
 void aimbotHook(HMODULE hModule) noexcept
 {
-    Sleep(1000);
 
     while (running)
     {
@@ -71,6 +69,8 @@ void entLoop(HMODULE hModule) noexcept
     {
         entlist.entListLoop();
     }
+
+    FreeLibraryAndExitThread(hModule, 0);
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule,
